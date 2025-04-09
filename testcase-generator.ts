@@ -1,3 +1,4 @@
+import { TestCase, CardFormat } from './types.js';
 
 // Calculate the check digit that would make a number pass Luhn validation
 const calculateLuhnCheckDigit = (partialDigits: number[]): number => {
@@ -64,12 +65,6 @@ const generateRandomDigits = (length: number): number[] => {
 };
 
 // Credit card formats and their specifications
-interface CardFormat {
-  name: string;
-  lengths: number[];
-  prefixes: string[];
-}
-
 const cardFormats: CardFormat[] = [
   {
     name: "Visa",
@@ -125,14 +120,8 @@ const generateCardNumber = (
   return allDigits.join("");
 };
 
-interface TestCase {
-  cardType: string;
-  cardNumber: string;
-  shouldBeValid: boolean;
-}
-
 // Generate test cases
-const generateTestCases = (count: number, validRatio: number = 0.7): any[] => {
+const generateTestCases = (count: number, validRatio: number = 0.7): TestCase[] => {
   const testCases: TestCase[] = [];
   const validCount = Math.floor(count * validRatio);
   const invalidCount = count - validCount;

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "ESNext", // Enables support for ESNext modules
+    "target": "ESNext", // Ensures compatibility with the latest ECMAScript features
+    "moduleResolution": "node", // Resolves modules in a Node.js-like manner
+    "strict": true, // Enables strict type-checking options
+    "esModuleInterop": true, // Allows default imports from CommonJS modules
+    "skipLibCheck": true, // Skips type checking of declaration files
+    "forceConsistentCasingInFileNames": true // Enforces consistent casing in imports
+  },
+  "include": ["*.js", "*.ts"], // Adjust to include your source files
+  "exclude": ["node_modules", "dist"] // Exclude unnecessary directories
+}

@@ -1,21 +1,12 @@
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 // Calculate the check digit that would make a number pass Luhn validation
-var calculateLuhnCheckDigit = function (partialDigits) {
+const calculateLuhnCheckDigit = (partialDigits) => {
     // Create a copy and add a placeholder 0 for the check digit
-    var digits = __spreadArray(__spreadArray([], partialDigits, true), [0], false);
-    var sum = 0;
-    var double = true;
+    const digits = [...partialDigits, 0];
+    let sum = 0;
+    let double = true;
     // Process from right to left
-    for (var i = digits.length - 2; i >= 0; i--) {
-        var value = digits[i];
+    for (let i = digits.length - 2; i >= 0; i--) {
+        let value = digits[i];
         if (double) {
             value *= 2;
             if (value > 9) {
@@ -26,16 +17,16 @@ var calculateLuhnCheckDigit = function (partialDigits) {
         double = !double;
     }
     // Calculate the check digit that makes the sum divisible by 10
-    var checkDigit = (10 - (sum % 10)) % 10;
+    const checkDigit = (10 - (sum % 10)) % 10;
     return checkDigit;
 };
 // Luhn algorithm validation (from your code)
-var isLuhnValid = function (digits) {
-    var sum = 0;
-    var double = false;
+const isLuhnValid = (digits) => {
+    let sum = 0;
+    let double = false;
     // Process from right to left
-    for (var i = digits.length - 1; i >= 0; i--) {
-        var value = digits[i];
+    for (let i = digits.length - 1; i >= 0; i--) {
+        let value = digits[i];
         if (double) {
             value *= 2;
             if (value > 9) {
@@ -48,17 +39,16 @@ var isLuhnValid = function (digits) {
     return sum % 10 === 0;
 };
 // Generate a random digit from 0-9
-var randomDigit = function () { return Math.floor(Math.random() * 10); };
+const randomDigit = () => Math.floor(Math.random() * 10);
 // Generate random digits of specified length
-var generateRandomDigits = function (length) {
+const generateRandomDigits = (length) => {
     if (length <= 0 || !Number.isInteger(length)) {
         throw new Error("Length must be a positive integer.");
     }
-    return Array.from({ length: length }, function () {
-        return randomDigit();
-    });
+    return Array.from({ length }, () => randomDigit());
 };
-var cardFormats = [
+// Credit card formats and their specifications
+const cardFormats = [
     {
         name: "Visa",
         lengths: [16],
@@ -81,49 +71,47 @@ var cardFormats = [
     },
 ];
 // Generate a card number for a specific format
-var generateCardNumber = function (format, shouldBeValid) {
-    var length = format.lengths[Math.floor(Math.random() * format.lengths.length)];
-    var prefix = format.prefixes[Math.floor(Math.random() * format.prefixes.length)];
+const generateCardNumber = (format, shouldBeValid) => {
+    const length = format.lengths[Math.floor(Math.random() * format.lengths.length)];
+    const prefix = format.prefixes[Math.floor(Math.random() * format.prefixes.length)];
     // Convert prefix to array of digits
-    var prefixDigits = prefix.split("").map(Number);
+    const prefixDigits = prefix.split("").map(Number);
     // Generate random digits for the remaining length (excluding the check digit)
-    var randomDigs = generateRandomDigits(length - prefixDigits.length - 1);
+    const randomDigs = generateRandomDigits(length - prefixDigits.length - 1);
     // Combine prefix and random digits
-    var partialDigits = __spreadArray(__spreadArray([], prefixDigits, true), randomDigs, true);
+    const partialDigits = [...prefixDigits, ...randomDigs];
     // Calculate the check digit
-    var correctCheckDigit = calculateLuhnCheckDigit(partialDigits);
+    const correctCheckDigit = calculateLuhnCheckDigit(partialDigits);
     // If we want an invalid card, use a different check digit
-    var checkDigit = shouldBeValid
+    const checkDigit = shouldBeValid
         ? correctCheckDigit
         : (correctCheckDigit + 1 + Math.floor(Math.random() * 8)) % 10;
     // Add the check digit and convert to string
-    var allDigits = __spreadArray(__spreadArray([], partialDigits, true), [checkDigit], false);
+    const allDigits = [...partialDigits, checkDigit];
     return allDigits.join("");
 };
 // Generate test cases
-var generateTestCases = function (count, validRatio) {
-    if (validRatio === void 0) { validRatio = 0.7; }
-    var testCases = [];
-    var validCount = Math.floor(count * validRatio);
-    var invalidCount = count - validCount;
+const generateTestCases = (count, validRatio = 0.7) => {
+    const testCases = [];
+    const validCount = Math.floor(count * validRatio);
+    const invalidCount = count - validCount;
     // For each of the card formats
-    for (var _i = 0, cardFormats_1 = cardFormats; _i < cardFormats_1.length; _i++) {
-        var format = cardFormats_1[_i];
+    for (const format of cardFormats) {
         // Generate valid cases
-        for (var i = 0; i < validCount; i++) {
-            var cardNumber = generateCardNumber(format, true);
+        for (let i = 0; i < validCount; i++) {
+            const cardNumber = generateCardNumber(format, true);
             testCases.push({
                 cardType: format.name,
-                cardNumber: cardNumber,
+                cardNumber,
                 shouldBeValid: true,
             });
         }
         // Generate invalid cases
-        for (var i = 0; i < invalidCount; i++) {
-            var cardNumber = generateCardNumber(format, false);
+        for (let i = 0; i < invalidCount; i++) {
+            const cardNumber = generateCardNumber(format, false);
             testCases.push({
                 cardType: format.name,
-                cardNumber: cardNumber,
+                cardNumber,
                 shouldBeValid: false,
             });
         }
@@ -131,6 +119,7 @@ var generateTestCases = function (count, validRatio) {
     return testCases;
 };
 // Generate 10 test cases with 70% valid
-var testCases = generateTestCases(10, 0.7);
+const testCases = generateTestCases(10, 0.7);
 console.log(JSON.stringify(testCases, null, 2));
 testCases;
+export {};

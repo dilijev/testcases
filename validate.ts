@@ -1,8 +1,6 @@
-interface TestCase {
-  cardType: string;
-  cardNumber: string;
-  shouldBeValid: boolean;
-}
+import { TestCase } from './types.js';
+import * as fs from 'fs';
+import * as path from 'path';
 
 // Luhn algorithm validation (from your code)
 const isLuhnValid = (digits: number[]): boolean => {
@@ -28,7 +26,7 @@ const isLuhnValid = (digits: number[]): boolean => {
 };
 
 // Validation script to check our generated test cases
-const validateTestCases = (testCases: any[]): void => {
+const validateTestCases = (testCases: TestCase[]): void => {
   let passedTests = 0;
   let failedTests = 0;
 
@@ -51,7 +49,17 @@ const validateTestCases = (testCases: any[]): void => {
   }
 }
 
+// load test cases from JSON file test-cases.json (using node.js types)
 let testCases: TestCase[];
+const testCasesPath = path.resolve(__dirname, 'test-cases.json');
+
+try {
+  const data = fs.readFileSync(testCasesPath, 'utf-8');
+  testCases = JSON.parse(data) as TestCase[];
+} catch (error) {
+  console.error(`Failed to load test cases from ${testCasesPath}:`, error);
+  process.exit(1);
+}
 
 // Assuming testCases is loaded from the JSON file
 validateTestCases(testCases);
