@@ -3,10 +3,75 @@
 
 <head>
   <title>Test Cases</title>
+  <style>
+    .expectRedacted {
+      color: red;
+    }
+
+    .expectClear {
+      color: green;
+    }
+
+    span.pass::after {
+      content: '✅';
+    }
+
+    span.fail::after {
+      content: '❌';
+    }
+  </style>
+  <script>
+    function checkTestCaseCorrectlyRedacted(tc) {
+      // Check if the test case is redacted
+      const isRedacted = tc.redacted;
+      const expectRedacted = tc.elem.classList.contains('expectRedacted');
+
+      return isRedacted === expectRedacted;
+    }
+
+    function checkForRedacted() {
+      const testCases = Array.from(document.querySelectorAll('.testcase')).map(
+        e => {
+          return {
+            elem: e,
+            text: e.textContent,
+            redacted: e.textContent.includes('█'),
+          };
+        }
+      );
+
+      // For each test case, find or insert a span with the class 'result', and ensure that only one of 'pass' or 'fail'
+      // is set on that element, based on whether the test case is redacted or not
+      testCases.forEach(tc => {
+        let resultSpan = tc.elem.querySelector('.result');
+        if (!resultSpan) {
+          resultSpan = document.createElement('span');
+          resultSpan.className = 'result';
+          tc.elem.appendChild(resultSpan);
+        }
+
+        // remove 'pass' and 'fail' classes from the span
+        resultSpan.classList.remove('pass', 'fail');
+
+        const passed = checkTestCaseCorrectlyRedacted(tc);
+        if (passed) {
+          resultSpan.classList.add('pass');
+        } else {
+          resultSpan.classList.add('fail');
+        }
+      });
+    }
+  </script>
 </head>
 
 <body>
   <h1>Test Cases</h1>
+  <button onclick="checkForRedacted()">Check for redaction '█'</button>
+  <div class="testcase expectClear">testcase1</div>
+  <div class="testcase expectClear">testcase2</div>
+  <div class="testcase expectRedacted">█testcase3</div>
+  <div class="testcase expectClear">testcase4</div>
+  <div class="testcase expectRedacted">█test.email@example.com</div>
 </body>
 
 </html>
