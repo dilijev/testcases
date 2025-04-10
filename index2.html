@@ -31,7 +31,8 @@
           const file = event.target.files[0];
           if (file) {
             const fileURL = URL.createObjectURL(file);
-            await loadTestCasesFromFile(fileURL);
+            // Use forceUpdate=false (don't force touching all the new elements)
+            await loadTestCasesFromFile(fileURL, /*forceUpdate=*/ false);
             URL.revokeObjectURL(fileURL);
           }
         });

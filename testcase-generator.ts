@@ -1,4 +1,4 @@
-import { TestCase, CardFormat } from './types.js';
+import { TestCase, CardFormat } from "./types.js";
 
 // Calculate the check digit that would make a number pass Luhn validation
 const calculateLuhnCheckDigit = (partialDigits: number[]): number => {
@@ -121,7 +121,10 @@ const generateCardNumber = (
 };
 
 // Generate test cases
-const generateTestCases = (count: number, validRatio: number = 0.7): TestCase[] => {
+const generateTestCases = (
+  count: number,
+  validRatio: number = 0.7
+): TestCase[] => {
   const testCases: TestCase[] = [];
   const validCount = Math.floor(count * validRatio);
   const invalidCount = count - validCount;

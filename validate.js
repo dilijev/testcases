@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+import * as fs from "fs";
+import * as path from "path";
 // Luhn algorithm validation (from your code)
 const isLuhnValid = (digits) => {
     let sum = 0;
@@ -41,9 +41,9 @@ const validateTestCases = (testCases) => {
 };
 // load test cases from JSON file test-cases.json (using node.js types)
 let testCases;
-const testCasesPath = path.resolve(__dirname, 'test-cases.json');
+const testCasesPath = path.resolve(__dirname, "test-cases.json");
 try {
-    const data = fs.readFileSync(testCasesPath, 'utf-8');
+    const data = fs.readFileSync(testCasesPath, "utf-8");
     testCases = JSON.parse(data);
 }
 catch (error) {
