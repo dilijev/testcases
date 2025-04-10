@@ -33,7 +33,8 @@ export function checkForRedacted() {
     if (!resultSpan) {
       resultSpan = document.createElement("span");
       resultSpan.className = "result";
-      tc.elem.appendChild(resultSpan);
+      // Display pass/fail indicator at the beginning of the test case line
+      tc.elem.insertBefore(resultSpan, tc.elem.firstChild);
     }
 
     resultSpan.classList.remove("pass", "fail");
