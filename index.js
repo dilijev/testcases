@@ -29,7 +29,8 @@ export async function loadTestCasesFromFile(filePath) {
     container.innerHTML = '';
     testCases.forEach((tc) => {
         const div = document.createElement('div');
-        div.className = `testcase ${tc.shouldBeValid ? 'expectClear' : 'expectRedacted'}`;
+        //  When the CC number is valid, it should be redacted
+        div.className = `testcase ${tc.shouldBeValid ? 'expectRedacted' : 'expectClear'}`;
         div.textContent = tc.cardNumber;
         container.appendChild(div);
     });
