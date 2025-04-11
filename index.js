@@ -60,25 +60,84 @@ export async function loadTestCasesFromFile(filePath, forceUpdate = true) {
     container.innerHTML = "";
     // Formatter functions for various card types
     const formatters = {
-        Visa: [
-            (cardNumber) => cardNumber, // No-op formatter
-            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
-            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
-        ],
-        Mastercard: [
-            (cardNumber) => cardNumber, // No-op formatter
-            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
-            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
-        ],
         "American Express": [
             (cardNumber) => cardNumber, // No-op formatter
             (cardNumber) => cardNumber.replace(/(\d{4})(\d{6})(\d{5})/, "$1-$2-$3"), // ####-######-#####
             (cardNumber) => cardNumber.replace(/(\d{4})(\d{6})(\d{5})/, "$1 $2 $3"), // #### ###### #####
         ],
-        Discover: [
+        "BCGlobal": [
             (cardNumber) => cardNumber, // No-op formatter
             (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
             (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "Carte Blanche": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(\d{6})(\d{4})/, "$1-$2-$3"), // ####-######-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(\d{6})(\d{4})/, "$1 $2 $3"), // #### ###### ####
+        ],
+        "Diners Club": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(\d{6})(\d{4})/, "$1-$2-$3"), // ####-######-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(\d{6})(\d{4})/, "$1 $2 $3"), // #### ###### ####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "Discover": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "InstaPayment": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "JCB": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "Laser (legacy)": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "Maestro": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "Mastercard": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "Solo (legacy)": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "Switch (legacy)": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "UnionPay": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "Visa": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+        ],
+        "Unknown": [
+            (cardNumber) => cardNumber, // No-op formatter
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1-"), // ####-####-####-####
+            (cardNumber) => cardNumber.replace(/(\d{4})(?=\d)/g, "$1 "), // #### #### #### ####
+            (cardNumber) => cardNumber.replace(/(\d{4})(\d{6})(\d{4})/, "$1-$2-$3"), // ####-######-####[...]
+            (cardNumber) => cardNumber.replace(/(\d{4})(\d{6})(\d{4})/, "$1 $2 $3"), // #### ###### ####[...]
         ],
     };
     testCases.forEach((tc) => {
