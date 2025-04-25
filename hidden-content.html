@@ -1,36 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hidden Content Test</title>
-  <style>
-    .hidden {
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <div>
-    <p>Contact us at 1-800-555-6789 for more information.</p>
-    <p>Email us at <a href="mailto:info@example.com">info@example.com</a>.</p>
-  </div>
-  <button id="toggleButton">Show/Hide Contact</button>
-  <div class="hidden">
-    <p>Hidden contact number: 1-234-555-6789</p>
-    <p>Hidden contact email: <a href="mailto:contact@example.com">contact@example.com</a></p>
-  </div>
-  <script>
-    const hiddenDiv = document.querySelector('.hidden');
-    const toggleButton = document.getElementById('toggleButton');
-
-    toggleButton.addEventListener('click', () => {
-      if (hiddenDiv.style.display === 'none' || hiddenDiv.style.display === '') {
-        hiddenDiv.style.display = 'block';
-      } else {
-        hiddenDiv.style.display = 'none';
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hidden Content Test</title>
+    <style>
+      .hidden {
+        display: none;
       }
-    });
-  </script>
-</body>
+    </style>
+  </head>
+  <body>
+    <div>
+      <p>Contact us at 1-800-555-6789 for more information.</p>
+      <p>Email us at <a href="mailto:info@example.com">info@example.com</a>.</p>
+    </div>
+    <div>
+      <button id="toggleButton">Show/Hide Contact</button>
+    </div>
+    <div class="hidden">
+      <p>Hidden contact number: 1-234-555-6789</p>
+      <p>
+        Hidden contact email:
+        <a href="mailto:contact@example.com">contact@example.com</a>
+      </p>
+    </div>
+    <div>
+      <button id="addHiddenAreaButton">Add Hidden Area</button>
+    </div>
+    <div id="dynamicHiddenArea">
+      <!-- Starts intentionally empty -->
+    </div>
+    <script>
+      const hiddenDiv = document.querySelector(".hidden");
+      const toggleButton = document.getElementById("toggleButton");
+
+      toggleButton.addEventListener("click", () => {
+        if (
+          hiddenDiv.style.display === "none" ||
+          hiddenDiv.style.display === ""
+        ) {
+          hiddenDiv.style.display = "block";
+        } else {
+          hiddenDiv.style.display = "none";
+        }
+      });
+
+      const addHiddenAreaButton = document.getElementById(
+        "addHiddenAreaButton"
+      );
+      const hiddenAreasContainer = document.getElementById("dynamicHiddenArea");
+
+      addHiddenAreaButton.addEventListener("click", () => {
+        const newHiddenDiv = document.createElement("div");
+        newHiddenDiv.className = "hidden";
+        newHiddenDiv.innerHTML = `
+        <p>Hidden contact number: 1-234-555-6789</p>
+        <p>Hidden contact email: <a href="mailto:dynamic@example.com">dynamic@example.com</a></p>
+      `;
+
+        const toggleNewButton = document.createElement("button");
+        toggleNewButton.textContent = "Show/Hide Contact";
+        toggleNewButton.className = "toggleNewButton";
+
+        hiddenAreasContainer.appendChild(toggleNewButton);
+        hiddenAreasContainer.appendChild(newHiddenDiv);
+
+        toggleNewButton.addEventListener("click", () => {
+          if (
+            newHiddenDiv.style.display === "none" ||
+            newHiddenDiv.style.display === ""
+          ) {
+            newHiddenDiv.style.display = "block";
+          } else {
+            newHiddenDiv.style.display = "none";
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
