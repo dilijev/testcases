@@ -14,21 +14,21 @@
   <div>
     <p>Contact us at 1-800-555-6789 for more information.</p>
   </div>
+  <button id="toggleButton">Show/Hide Contact</button>
   <div class="hidden">
     <p>Hidden contact number: 1-234-555-6789</p>
-    <button id="toggleButton">Show/Hide Contact</button>
-    <script>
-      const hiddenDiv = document.querySelector('.hidden');
-      const toggleButton = document.getElementById('toggleButton');
+  </div>
+  <script>
+    const hiddenDiv = document.querySelector('.hidden');
+    const toggleButton = document.getElementById('toggleButton');
 
-      toggleButton.addEventListener('click', () => {
+    toggleButton.addEventListener('click', () => {
       if (hiddenDiv.style.display === 'none' || hiddenDiv.style.display === '') {
         hiddenDiv.style.display = 'block';
       } else {
         hiddenDiv.style.display = 'none';
       }
-      });
-    </script>
-  </div>
+    });
+  </script>
 </body>
 </html>
