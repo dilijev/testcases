@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hidden Content Test</title>
     <style>
+      button {
+        border-radius: 5px;
+        border: 1px solid black;
+      }
       .hidden {
         display: none;
       }
       .outline {
         outline: 1px solid black;
         border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 10px;
+        padding: 5px;
+        margin-bottom: 5px;
       }
       .static-public {
         background-color: #aad9ff;
@@ -27,7 +31,7 @@
         background-color: #ffb3b3;
       }
       .button-wrapper {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
       }
     </style>
   </head>
@@ -37,7 +41,7 @@
       <p>Email us at <a href="mailto:info@example.com">info@example.com</a>.</p>
     </div>
     <div class="button-wrapper">
-      <button id="toggleButton">Show/Hide Contact</button>
+      <button id="toggleButton" class="static-private">Show/Hide Contact</button>
     </div>
     <div class="hidden outline static-private">
       <p>Hidden contact number: 1-234-555-6789</p>
@@ -47,10 +51,14 @@
       </p>
     </div>
     <div class="button-wrapper">
-      <button id="addHiddenAreaButton">Add Hidden Area</button>
+      <button id="addHiddenAreaButton" class="dynamic-private">
+        Add Hidden Area
+      </button>
     </div>
     <div class="button-wrapper">
-      <button id="addUnhiddenAreaButton">Add Unhidden Area</button>
+      <button id="addUnhiddenAreaButton" class="dynamic-public">
+        Add Unhidden Area
+      </button>
     </div>
     <div id="dynamicHiddenArea">
       <!-- Starts intentionally empty -->
@@ -79,15 +87,16 @@
         const newHiddenDiv = document.createElement("div");
         newHiddenDiv.className = "hidden outline dynamic-private";
         newHiddenDiv.innerHTML = `
-        <p>Hidden contact number: 1-234-555-6789</p>
-        <p>Hidden contact email: <a href="mailto:dynamic@example.com">dynamic@example.com</a></p>
-      `;
+          <p>Hidden contact number: 1-234-555-6789</p>
+          <p>Hidden contact email: <a href="mailto:dynamic@example.com">dynamic@example.com</a></p>
+        `;
 
         const toggleNewButton = document.createElement("button");
         toggleNewButton.textContent = "Show/Hide Contact";
-        toggleNewButton.className = "toggleNewButton";
+        toggleNewButton.className = "toggleNewButton dynamic-private";
 
         const toggleNewButtonWrapper = document.createElement("div");
+        toggleNewButtonWrapper.className = "button-wrapper";
         toggleNewButtonWrapper.appendChild(toggleNewButton);
 
         hiddenAreasContainer.appendChild(toggleNewButtonWrapper);
