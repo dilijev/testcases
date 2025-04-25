@@ -8,17 +8,23 @@
       .hidden {
         display: none;
       }
+      .outline {
+        outline: 1px solid black;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
     </style>
   </head>
   <body>
-    <div style="outline: 1px solid black; border-radius: 5px; padding: 10px; margin-bottom: 10px;">
+    <div class="outline">
       <p>Contact us at 1-800-555-6789 for more information.</p>
       <p>Email us at <a href="mailto:info@example.com">info@example.com</a>.</p>
     </div>
     <div style="margin-bottom: 10px;">
       <button id="toggleButton">Show/Hide Contact</button>
     </div>
-    <div style="outline: 1px solid black; border-radius: 5px; padding: 10px; margin-bottom: 10px;" class="hidden">
+    <div class="hidden outline">
       <p>Hidden contact number: 1-234-555-6789</p>
       <p>Hidden contact email: <a href="mailto:contact@example.com">contact@example.com</a></p>
     </div>
@@ -28,7 +34,7 @@
     <div style="margin-bottom: 10px;">
       <button id="addUnhiddenAreaButton">Add Unhidden Area</button>
     </div>
-    <div id="dynamicHiddenArea" style="outline: 1px solid black; border-radius: 5px; padding: 10px;">
+    <div id="dynamicHiddenArea">
       <!-- Starts intentionally empty -->
     </div>
     <script>
@@ -53,7 +59,7 @@
 
       addHiddenAreaButton.addEventListener("click", () => {
         const newHiddenDiv = document.createElement("div");
-        newHiddenDiv.className = "hidden";
+        newHiddenDiv.className = "hidden outline";
         newHiddenDiv.innerHTML = `
         <p>Hidden contact number: 1-234-555-6789</p>
         <p>Hidden contact email: <a href="mailto:dynamic@example.com">dynamic@example.com</a></p>
@@ -63,7 +69,10 @@
         toggleNewButton.textContent = "Show/Hide Contact";
         toggleNewButton.className = "toggleNewButton";
 
-        hiddenAreasContainer.appendChild(toggleNewButton);
+        const toggleNewButtonWrapper = document.createElement("div");
+        toggleNewButtonWrapper.appendChild(toggleNewButton);
+
+        hiddenAreasContainer.appendChild(toggleNewButtonWrapper);
         hiddenAreasContainer.appendChild(newHiddenDiv);
 
         toggleNewButton.addEventListener("click", () => {
@@ -82,7 +91,7 @@
 
       addUnhiddenAreaButton.addEventListener("click", () => {
         const newUnhiddenDiv = document.createElement("div");
-        newUnhiddenDiv.className = "unhidden";
+        newUnhiddenDiv.className = "unhidden outline";
         newUnhiddenDiv.innerHTML = `
           <p>Unhidden contact number: 1-567-555-6789</p>
           <p>Unhidden contact email: <a href="mailto:unhidden@example.com">unhidden@example.com</a></p>
