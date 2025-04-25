@@ -14,24 +14,42 @@
         padding: 10px;
         margin-bottom: 10px;
       }
+      .static-public {
+        background-color: #aad9ff;
+      }
+      .static-private {
+        background-color: hsl(279, 68%, 83%);
+      }
+      .dynamic-public {
+        background-color: #ffe6a6;
+      }
+      .dynamic-private {
+        background-color: #ffb3b3;
+      }
+      .button-wrapper {
+        margin-bottom: 10px;
+      }
     </style>
   </head>
   <body>
-    <div class="outline">
+    <div class="outline static-public">
       <p>Contact us at 1-800-555-6789 for more information.</p>
       <p>Email us at <a href="mailto:info@example.com">info@example.com</a>.</p>
     </div>
-    <div style="margin-bottom: 10px;">
+    <div class="button-wrapper">
       <button id="toggleButton">Show/Hide Contact</button>
     </div>
-    <div class="hidden outline">
+    <div class="hidden outline static-private">
       <p>Hidden contact number: 1-234-555-6789</p>
-      <p>Hidden contact email: <a href="mailto:contact@example.com">contact@example.com</a></p>
+      <p>
+        Hidden contact email:
+        <a href="mailto:contact@example.com">contact@example.com</a>
+      </p>
     </div>
-    <div style="margin-bottom: 10px;">
+    <div class="button-wrapper">
       <button id="addHiddenAreaButton">Add Hidden Area</button>
     </div>
-    <div style="margin-bottom: 10px;">
+    <div class="button-wrapper">
       <button id="addUnhiddenAreaButton">Add Unhidden Area</button>
     </div>
     <div id="dynamicHiddenArea">
@@ -59,7 +77,7 @@
 
       addHiddenAreaButton.addEventListener("click", () => {
         const newHiddenDiv = document.createElement("div");
-        newHiddenDiv.className = "hidden outline";
+        newHiddenDiv.className = "hidden outline dynamic-private";
         newHiddenDiv.innerHTML = `
         <p>Hidden contact number: 1-234-555-6789</p>
         <p>Hidden contact email: <a href="mailto:dynamic@example.com">dynamic@example.com</a></p>
@@ -87,11 +105,13 @@
         });
       });
 
-      const addUnhiddenAreaButton = document.getElementById("addUnhiddenAreaButton");
+      const addUnhiddenAreaButton = document.getElementById(
+        "addUnhiddenAreaButton"
+      );
 
       addUnhiddenAreaButton.addEventListener("click", () => {
         const newUnhiddenDiv = document.createElement("div");
-        newUnhiddenDiv.className = "unhidden outline";
+        newUnhiddenDiv.className = "unhidden outline dynamic-public";
         newUnhiddenDiv.innerHTML = `
           <p>Unhidden contact number: 1-567-555-6789</p>
           <p>Unhidden contact email: <a href="mailto:unhidden@example.com">unhidden@example.com</a></p>
