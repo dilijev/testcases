@@ -28,6 +28,9 @@
     <div>
       <button id="addHiddenAreaButton">Add Hidden Area</button>
     </div>
+    <div>
+      <button id="addUnhiddenAreaButton">Add Unhidden Area</button>
+    </div>
     <div id="dynamicHiddenArea">
       <!-- Starts intentionally empty -->
     </div>
@@ -76,6 +79,19 @@
             newHiddenDiv.style.display = "none";
           }
         });
+      });
+
+      const addUnhiddenAreaButton = document.getElementById("addUnhiddenAreaButton");
+
+      addUnhiddenAreaButton.addEventListener("click", () => {
+        const newUnhiddenDiv = document.createElement("div");
+        newUnhiddenDiv.className = "unhidden";
+        newUnhiddenDiv.innerHTML = `
+          <p>Unhidden contact number: 1-567-555-6789</p>
+          <p>Unhidden contact email: <a href="mailto:unhidden@example.com">unhidden@example.com</a></p>
+        `;
+
+        hiddenAreasContainer.appendChild(newUnhiddenDiv);
       });
     </script>
   </body>
